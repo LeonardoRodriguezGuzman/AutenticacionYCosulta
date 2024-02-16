@@ -1,0 +1,37 @@
+------------------------REQUEST-----------------------------------
+POST /ws/wsalumnos.asmx HTTP/1.1
+Host: sicenet.surguanajuato.tecnm.mx
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+SOAPAction: "http://tempuri.org/accesoLogin"
+
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <accesoLogin xmlns="http://tempuri.org/">
+      <strMatricula>string</strMatricula>
+      <strContrasenia>string</strContrasenia>
+      <tipoUsuario>ALUMNO or DOCENTE</tipoUsuario>
+    </accesoLogin>
+  </soap:Body>
+</soap:Envelope>
+
+------------------------RESPONSE-------------------------------------
+HTTP/1.1 200 OK
+Content-Type: text/xml; charset=utf-8
+Content-Length: length
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <accesoLoginResponse xmlns="http://tempuri.org/">
+      <accesoLoginResult>string</accesoLoginResult>
+    </accesoLoginResponse>
+  </soap:Body>
+</soap:Envelope>
+
+debemos hacer 3 modelos envoltorio
+
+wsdl to code
+
+
+accesoLogin
