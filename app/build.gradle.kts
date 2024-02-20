@@ -67,14 +67,27 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-simplexml:2.9.0")
     //Retrofit con Scalar Converter
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    // OKhttp3
+    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+    // GSON
+    implementation("com.google.code.gson:gson:2.10")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //MarsPhotos
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
     implementation("com.google.android.gms:play-services-tasks:18.1.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+
     implementation("androidx.compose.material3:material3-android:1.2.0")
+    implementation("com.google.android.material:material:1.11.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
