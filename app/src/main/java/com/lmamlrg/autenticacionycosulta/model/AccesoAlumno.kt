@@ -6,19 +6,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AccesoAlumno (
     @SerialName("acceso")
-    val acceso : Boolean,
+    val acceso : Boolean = false,
     @SerialName("estatus")
-    val estatus : String,
+    val estatus : String = "",
     @SerialName("tipoUsuario")
-    val tipoUsuario : Int,
+    val tipoUsuario : Int = 0,
     @SerialName("contrasenia")
-    val contrasenia : String,
+    val contrasenia : String = "",
     @SerialName("matricula")
-    val matricula : String
-){
-    override fun toString() : String{
-        return ("estatus: $estatus, matricula: $matricula" )
-    }
-}
+    val matricula : String = ""
+)
 
 

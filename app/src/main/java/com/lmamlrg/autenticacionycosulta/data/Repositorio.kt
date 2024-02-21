@@ -1,23 +1,24 @@
 package com.lmamlrg.autenticacionycosulta.data
 
 import android.util.Log
-import com.google.gson.Gson
-import com.lmamlrg.autenticacionycosulta.model.AccesoAlumno
-import com.lmamlrg.autenticacionycosulta.model.DatosAlumno
+import com.lmamlrg.autenticacionycosulta.model.AccesoAlumnoEnvelope
+import com.lmamlrg.autenticacionycosulta.model.DatosAlumnoEnvelope
 import com.lmamlrg.autenticacionycosulta.network.AccesoAlumnoApi
 import com.lmamlrg.autenticacionycosulta.network.DatosAlumnoApi
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.ResponseBody
-import retrofit2.Response
+import org.simpleframework.xml.core.Persister
 import java.io.IOException
+import java.io.StringReader
 
+private const val TAG_SUCCESS = "SUCCESS"
+private const val TAG_ERROR = "ERROR"
 class Repositorio(
     private val accesoAlumnoApi: AccesoAlumnoApi,
     private val datosAlumnoApi: DatosAlumnoApi
 ) {
 
-    suspend fun getAcceso(matricula: String, contrasenia: String, tipoUsuario: String): String {
+    suspend fun getAcceso(matricula: String, contrasenia: String, tipoUsuario: String): String? {
         val xml = """
             <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
               <soap:Body>
@@ -34,11 +35,18 @@ class Repositorio(
         return try {
             val response = accesoAlumnoApi.getAcceso(requestBody)
             val responseBodyString = response.string()
-            Log.d("SUCCESS", responseBodyString)
-            responseBodyString
+
+            val serializer = Persister()
+            val reader = StringReader(responseBodyString)
+            val envelope = serializer.read(AccesoAlumnoEnvelope::class.java, reader)
+            var respuestaJson = envelope.body?.response?.result.toString()
+
+            // Utiliza Gson para convertir el JSON a un objeto Kotlin
+            Log.d(TAG_SUCCESS, respuestaJson)
+            respuestaJson
         } catch (e: IOException){
-            Log.e("erroralobtener","${e.message}")
-            "Error"
+            Log.e(TAG_ERROR,"${e.message}")
+            ""
         }
     }
 
@@ -52,10 +60,15 @@ class Repositorio(
         return try {
             val response = datosAlumnoApi.getAlumnoAcademicoWithLineamiento(requestBody)
                 val responseBodyString = response.string()
-                Log.d("Logrado:", "$responseBodyString")
-            responseBodyString
-        } catch (e: Exception) {
-            Log.e("nosepudo", "${e.message}")
+            val serializer = Persister()
+            val reader = StringReader(responseBodyString)
+            val envelope = serializer.read(DatosAlumnoEnvelope::class.java, reader)
+
+            val jsonString = envelope.body?.response?.result.toString()
+            jsonString
+
+        } catch (e: IOException) {
+            Log.e(TAG_ERROR, "${e.message}")
             ""
         }
     }
